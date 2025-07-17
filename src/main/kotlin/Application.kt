@@ -34,4 +34,5 @@ fun Application.module() {
     }
 
     configureRouting()
+    configureProxyRoutes()
 }

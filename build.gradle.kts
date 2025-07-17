@@ -26,7 +26,7 @@ repositories {
 }
 
 dependencies {
-    /** KTOR DEPENDENCIES */
+    /** KTOR SERVER DEPENDENCIES */
     implementation("io.ktor:ktor-server-core-jvm")
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-netty")
@@ -35,6 +35,12 @@ dependencies {
     implementation("io.ktor:ktor-server-cors")
     implementation("io.ktor:ktor-serialization-kotlinx-json")
 
+    /** KTOR CLIENT DEPENDENCIES */
+    implementation("io.ktor:ktor-client-core")
+    implementation("io.ktor:ktor-client-cio")
+    implementation("io.ktor:ktor-client-content-negotiation")
+
+    /** KOTLIN DEPENDENCIES */
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
     implementation("ch.qos.logback:logback-classic:$logback_version")
 
