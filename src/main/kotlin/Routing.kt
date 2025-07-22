@@ -34,5 +34,10 @@ fun Application.configureRouting() {
                 call.respond(HttpStatusCode.BadRequest, "Invalid HumanDigitalTwin JSON: ${e.message}")
             }
         }
+
+        get("api/hdt/all") {
+            val dts = HdtRegistry.getRegisteredIds()
+            call.respond(dts)
+        }
     }
 }

@@ -10,6 +10,10 @@ object HdtRegistry {
         registry[id] = findFreePort()
     }
 
+    fun getRegisteredIds(): Set<String> {
+        return registry.keys
+    }
+
     fun getPort(id: String): Int? {
         return registry[id]
     }
