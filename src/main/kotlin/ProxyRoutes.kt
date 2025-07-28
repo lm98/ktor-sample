@@ -21,10 +21,32 @@ fun Application.configureProxyRoutes() {
             proxyToDT(call, "state")
         }
 
+        get("api/hdt/{id}/state/changes") {
+            proxyToDT(call, "state/changes")
+        }
+
+        get("api/hdt/{id}/state/previous") {
+            proxyToDT(call, "state/previous")
+        }
+
         get("api/hdt/{id}/state/properties") {
             proxyToDT(call, "state/properties")
         }
 
+        get("api/hdt/{id}/properties/{propertyName}") {
+            val propertyName = call.parameters["propertyName"] ?: return@get call.respondText(
+                "Missing property name", status = HttpStatusCode.BadRequest
+            )
+            proxyToDT(call, "properties/$propertyName")
+        }
+
+        get("api/hdt/{id}/storage") {
+            proxyToDT(call, "storage")
+        }
+
+        post("api/hdt/{id}/storage/query") {
+            proxyToDT(call, "storage", HttpMethod.Post)
+        }
     }
 }
 
