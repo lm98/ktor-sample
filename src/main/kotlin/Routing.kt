@@ -35,8 +35,9 @@ fun Application.configureRouting() {
             }
         }
 
-        get("api/hdt/all") {
+        get("api/hdt") {
             val dts = HdtRegistry.getRegisteredIds()
+            println("Requested dts: $dts")
             call.respond(dts)
         }
     }
