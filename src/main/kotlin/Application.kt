@@ -1,5 +1,6 @@
 package com.example.com
 
+import io.github.lm98.whdt.core.serde.Stub
 import io.github.lm98.whdt.core.serde.modules.hdtModule
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
@@ -15,12 +16,7 @@ fun main(args: Array<String>) {
 
 fun Application.module() {
     install(ContentNegotiation) {
-        json(Json {
-            prettyPrint = true
-            serializersModule = hdtModule
-            classDiscriminator = "type" // Needed for sealed polymorphic serialization
-            encodeDefaults = true
-        })
+        json(Stub.hdtJson)
     }
 
     install(CORS) {

@@ -26,7 +26,7 @@ fun Application.configureRouting() {
                     id = hdtConfig.id,
                 )
                 val newDt = hdt.copy(digitalInterfaces = hdt.digitalInterfaces + listOf(httpDI))
-                app.addDt(newDt).startDt(newDt.id)
+                app.addStart(newDt)
                 call.respond(HttpStatusCode.Created, newDt)
             } catch (e: Exception) {
                 println("Deserialization failed: ${e.message}")
