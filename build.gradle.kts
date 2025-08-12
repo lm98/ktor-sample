@@ -44,9 +44,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
     implementation("ch.qos.logback:logback-classic:$logback_version")
 
+    /** WHDT DEPENDENCIES **/
     implementation("io.github.lm98:whdt-core:0.3.0")
     implementation("io.github.lm98:whdt-wldt-plugin:0.3.0")
-    implementation("com.google.code.gson:gson:2.13.1")
+    implementation("io.github.lm98:whdt-csv-parser:0.1.0")
 
     testImplementation("io.ktor:ktor-server-test-host")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")

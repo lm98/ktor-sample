@@ -1,8 +1,10 @@
 package com.example.com
 
 import com.example.com.util.HdtConfig
+import com.example.com.util.HdtConfig.Companion.toHumanDigitalTwin
 import com.example.com.util.HdtRegistry
 import io.github.lm98.whdt.core.hdt.interfaces.digital.HttpDigitalInterface
+import io.github.lm98.whdt.csv.parser.ParserCSV
 import io.github.lm98.whdt.wldt.plugin.execution.WldtApp
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -17,7 +19,7 @@ fun Application.configureRouting() {
         post("api/hdt/new") {
             try {
                 val hdtConfig = call.receive<HdtConfig>()
-                val hdt = HdtConfig.toHumanDigitalTwin(hdtConfig)
+                val hdt = toHumanDigitalTwin(hdtConfig)
                 HdtRegistry.register(hdt.id)
                 val httpDI = HttpDigitalInterface(
                     host = HdtRegistry.HDT_HTTP_HOST,
@@ -32,6 +34,25 @@ fun Application.configureRouting() {
                 println("Deserialization failed: ${e.message}")
                 e.printStackTrace()
                 call.respond(HttpStatusCode.BadRequest, "Invalid HumanDigitalTwin JSON: ${e.message}")
+            }
+        }
+
+        post("api/hdt/new/csv") {
+            try {
+                val text = call.receiveText()
+                val parser = ParserCSV.createParserCSV()
+                val map = parser.parsing(text)
+                //println(map.toString())
+                //csv contains info about several dts
+                val hdts = map.map {
+                    val id = it.key
+                    val properties = it.value
+                    toHumanDigitalTwin(HdtConfig("hdt-$id", properties))
+                }
+                app.addStartAll(hdts)
+                call.respond(HttpStatusCode.Created)
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.BadRequest, "Invalid HumanDigitalTwin CSV: ${e.message}")
             }
         }
 
